@@ -6,7 +6,7 @@
 	else if(typeof exports === 'object')
 		exports["eclipse"] = factory(require("jquery"));
 	else
-		root["eclipse"] = factory(root["jquery"]);
+		root["eclipse"] = factory(root["jQuery"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_7__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache

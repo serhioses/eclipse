@@ -20,7 +20,7 @@ gulp.task('scripts', ['webpack'], function () {
 });
 
 gulp.task('watch', ['scripts'], function () {
-    gulp.watch(['*.js', './lib/*.js'], ['scripts']);
+    gulp.watch(['./eclipse.js', './lib/*.js'], ['scripts']);
 });
 
 gulp.task('default', ['watch']);
