@@ -460,8 +460,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var forms = {};
 
-	forms.isPattern = function (pattern, str) {
-	    return str.length && pattern.length ? new RegExp(pattern, 'g').test(str) : null;
+	forms.isPattern = function (pattern, str, ignoreFlag) {
+	    return str.length && pattern.length ? new RegExp(pattern, 'g' + (ignoreFlag ? 'i' : '')).test(str) : null;
 	};
 
 	forms.isEmail = function (str) {
@@ -501,7 +501,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    form[0].firstInvalidField = null;
 
 	    if (_helpers2.default.getClass(options) === 'Object') {
-	        $$.extend(defaults, options);
+	        _jquery2.default.extend(defaults, options);
 	    }
 
 	    form.find(':input').each(function () {
@@ -527,7 +527,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                {
 	                                    if (val.length) {
 	                                        forms.setValid(self, defaults.showNotice, noticeID);
-	                                        form[0].firstInvalidField = null;
 	                                        defaults.callback();
 	                                    } else {
 	                                        if (!form[0].firstInvalidField) {
@@ -548,7 +547,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                {
 	                                    if (forms.isEmail(val)) {
 	                                        forms.setValid(self, defaults.showNotice, noticeID);
-	                                        form[0].firstInvalidField = null;
 	                                        defaults.callback();
 	                                    } else {
 	                                        if (!form[0].firstInvalidField) {
@@ -567,9 +565,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                }
 	                            default:
 	                                {
-	                                    if (forms.isPattern(pattern, val)) {
+	                                    if (forms.isPattern(pattern, val, self.data('ignore-flag'))) {
 	                                        forms.setValid(self, defaults.showNotice, noticeID);
-	                                        form[0].firstInvalidField = null;
 	                                        defaults.callback();
 	                                    } else {
 	                                        if (!form[0].firstInvalidField) {
@@ -593,11 +590,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            case 'radio':
 	            case 'checkbox':
 	                {
-	                    isChecked = (0, _jquery2.default)(this).data('f');
+	                    isChecked = (0, _jquery2.default)(this).data('checked');
 	                    if (typeof isChecked === 'boolean') {
 	                        if (self.prop('checked') === isChecked) {
 	                            forms.setValid(self);
-	                            form[0].firstInvalidField = null;
 	                            defaults.callback();
 	                        } else {
 	                            if (!form[0].firstInvalidField) {
@@ -618,7 +614,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    });
 
-	    return result;
+	    return countInvalid > 0 ? false : true;
 	};
 
 	exports.default = forms;
