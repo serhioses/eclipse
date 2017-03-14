@@ -465,7 +465,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	forms.isEmail = function (str) {
-	    return form.isPattern('^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&\'*+\/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&\'*+\/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$', str.toLowerCase());
+	    return forms.isPattern('^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&\'*+\/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&\'*+\/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$', str.toLowerCase());
 	};
 
 	forms.setValid = function (el, showNotice, id) {
