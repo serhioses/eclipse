@@ -7,7 +7,7 @@
 		exports["eclipse"] = factory(require("jquery"));
 	else
 		root["eclipse"] = factory(root["jQuery"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_7__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_3__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -64,19 +64,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _styles2 = _interopRequireDefault(_styles);
 
-	var _color = __webpack_require__(3);
+	var _color = __webpack_require__(4);
 
 	var _color2 = _interopRequireDefault(_color);
 
-	var _decorators = __webpack_require__(4);
+	var _decorators = __webpack_require__(5);
 
 	var _decorators2 = _interopRequireDefault(_decorators);
 
-	var _forms = __webpack_require__(5);
+	var _forms = __webpack_require__(6);
 
 	var _forms2 = _interopRequireDefault(_forms);
 
-	var _DOM = __webpack_require__(6);
+	var _DOM = __webpack_require__(7);
 
 	var _DOM2 = _interopRequireDefault(_DOM);
 
@@ -191,7 +191,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
-	var _color = __webpack_require__(3);
+	var _jquery = __webpack_require__(3);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _color = __webpack_require__(4);
 
 	var _color2 = _interopRequireDefault(_color);
 
@@ -200,25 +204,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var styles = {};
 
 	styles.support = {};
-
-	function getCoords(el) {
-	    var docEl = document.documentElement,
-	        body = document.body,
-	        coords = el.getBoundingClientRect(),
-	        top,
-	        left;
-
-	    top = coords.top + (window.pageYOffset || docEl.scrollTop || body.scrollTop || 0);
-	    left = coords.left + (window.pageXOffset || docEl.scrollLeft || body.scrollLeft || 0);
-
-	    top += docEl.clientTop || body.clientTop || 0;
-	    left += docEl.clientLeft || body.clientLeft || 0;
-
-	    return {
-	        top: top,
-	        left: left
-	    };
-	}
 
 	styles.support.animation = function () {
 	    var domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
@@ -248,37 +233,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return;
 	        }
 
-	        btn = this;
-	        circle = btn.querySelector('.circle');
-	        coords = getCoords(btn);
-	        size = Math.max(btn.clientWidth, btn.clientHeight);
+	        btn = (0, _jquery2.default)(this);
+	        circle = btn.find('.circle');
+	        coords = btn.offset();
+	        size = Math.max(btn.width(), btn.height());
 	        xPos = e.pageX - coords.left;
 	        yPos = e.pageY - coords.top;
-	        action = btn.dataset.colorAction;
-	        percent = btn.dataset.percent;
-	        btnColor = getComputedStyle(btn).backgroundColor;
+	        action = btn.data('color-action');
+	        percent = btn.data('percent');
+	        btnColor = getComputedStyle(btn[0]).backgroundColor;
 	        bg = _color2.default[action](btnColor, percent);
 
 	        if (circle) {
-	            btn.removeChild(circle);
+	            circle.remove();
 	            circle = null;
 	        }
 
-	        circle = document.createElement('div');
-	        circle.style.width = size + 'px';
-	        circle.style.height = size + 'px';
-	        circle.style.top = yPos - size / 2 + 'px';
-	        circle.style.left = xPos - size / 2 + 'px';
-	        circle.style.backgroundColor = bg;
-	        circle.className = 'circle';
-	        btn.appendChild(circle);
+	        circle = (0, _jquery2.default)('<div/>');
+	        circle.css({
+	            width: size + 'px',
+	            height: size + 'px',
+	            top: yPos - size / 2 + 'px',
+	            left: xPos - size / 2 + 'px',
+	            backgroundColor: bg
+	        });
+	        circle.addClass('circle');
+
+	        btn.append(circle);
 
 	        if (timerID) {
 	            clearTimeout(timerID);
 	        }
 
 	        timerID = setTimeout(function () {
-	            btn.removeChild(circle);
+	            circle.remove();
 	        }, 600);
 	    };
 	}();
@@ -289,6 +277,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */
 /***/ function(module, exports) {
 
+	module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -297,7 +291,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var color = {};
 
 	color.lighten = function (color, percent) {
-	    var parts = color.replace(/rgba?\(/, '').replace(/\)/, '').split(','),
+	    var parts = color === 'transparent' ? [0, 0, 0] : color.replace(/rgba?\(/, '').replace(/\)/, '').split(','),
 	        red = parseInt(parts[0], 10),
 	        green = parseInt(parts[1], 10),
 	        blue = parseInt(parts[2], 10),
@@ -313,7 +307,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	color.darken = function (color, percent) {
-	    var parts = color.replace(/rgba?\(/, '').replace(/\)/, '').split(','),
+	    var parts = color === 'transparent' ? [0, 0, 0] : color.replace(/rgba?\(/, '').replace(/\)/, '').split(','),
 	        red = parseInt(parts[0], 10),
 	        green = parseInt(parts[1], 10),
 	        blue = parseInt(parts[2], 10),
@@ -331,7 +325,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = color;
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -435,7 +429,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = decorators;
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -444,7 +438,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
-	var _DOM = __webpack_require__(6);
+	var _DOM = __webpack_require__(7);
 
 	var _DOM2 = _interopRequireDefault(_DOM);
 
@@ -452,7 +446,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _helpers2 = _interopRequireDefault(_helpers);
 
-	var _jquery = __webpack_require__(7);
+	var _jquery = __webpack_require__(3);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -620,7 +614,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = forms;
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -633,7 +627,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _helpers2 = _interopRequireDefault(_helpers);
 
-	var _jquery = __webpack_require__(7);
+	var _jquery = __webpack_require__(3);
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -717,12 +711,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	exports.default = DOM;
-
-/***/ },
-/* 7 */
-/***/ function(module, exports) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_7__;
 
 /***/ },
 /* 8 */
